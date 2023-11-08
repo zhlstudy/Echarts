@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <!-- 引入刚刚下载的 ECharts 文件 -->
+    <script src="/echarts/echarts.min.js"></script>
+    <script src="/echarts/china.js"></script>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+</head>
+<body>
+<form action="http://localhost:8088/Line.html">
+    <input type="submit" value="查看折线图">
+</form>
+
+<!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+<div id="main" style="width: 900px;height:700px;"></div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    // 指定图表的配置项和数据
+    var dataList = [];
+
+    option = {
+        title: {
+            show: false
+        },
+        color: [
+            '#19D4AE',
+            '#FFB980',
+            '#5ab1ef',
+            '#d9d0c7',
+            '#d87a80',
+            '#d49ea2',
+            '#18957b',
+            '#9d7edb',
+            '#fa6e86',
+            '#0F63A4',
+            '#8151e2',
+            '#c4b4e4',
+            '#fbae44',
+            '#9fb7fd',
+            '#2092fc',
+            '#8bfdcd',
+            '#7aa3a8',
+            '#bd5981',
+            '#9c8a88',
+            '#85a998',
+        ],
+        tooltip: {
+            trigger: 'item',
+            // formatter: '{b} : {c} ({d}%)'
+            formatter: function (param) {
+                return param.marker + param.name + "：" + param.value + "<br>";
+            }
+        },
+        legend: {
+            bottom: '100',
+            data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '1', '2', '3', '4', '5', '搜索引擎', '6', '7', '8', '9', '10',]
+        }
+
+    };
+
+
+    $.ajax({
+        url: "/query",
+        datatype: "json",
+        success: function (data) {
+            for (var i in data) {
+                dataList[i] = data[i]
+            }
+            myChart.setOption({
+                series: [
+                    {
+                        name: "中国疫情数据",
+                        type: 'pie',
+                        radius: '50%',
+                        data: dataList,
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            })
+        }
+    });
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+
+
+</body>
+</html>

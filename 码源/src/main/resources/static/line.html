@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <!-- 引入刚刚下载的 ECharts 文件 -->
+    <script src="/echarts/echarts.min.js"></script>
+    <script src="/echarts/china.js"></script>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+</head>
+
+<body style="height: 100%; margin: 0">
+<form action="http://localhost:8088/Bar.html">
+    <input type="submit" value="查看柱形图">
+</form>
+<div id="container" style="width: 900px;height:700px;"></div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('container'));
+
+
+    // 指定图表的配置项和数据
+    var dataList = [];
+
+    var option = {
+        xAxis: {
+            type: 'category',
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                type: 'line'
+            }
+        ]
+    };
+
+    $.ajax({
+        //    "/Line"
+        url: "/queryBar",
+        datatype: "json",
+        success: function (data) {
+            myChart.setOption({
+                xAxis: [{
+                    //data: data.dayList
+                    data: data.cityList,
+                }],
+                series: [{
+                    //data: data.IncomeList
+                    data: data.numberList,
+                }]
+            })
+        }
+    });
+
+
+    myChart.setOption(option);
+</script>
+</body>
+
+</html>

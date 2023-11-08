@@ -1,0 +1,13 @@
+INSERT INTO `noce_data` (`id`, `name`, `value`) VALUES (1, '香港', 98);
+INSERT INTO `noce_data` (`id`, `name`, `value`) VALUES (2, '澳门', 46);
+INSERT INTO `noce_data` (`id`, `name`, `value`) VALUES (3, '台湾', 55);
+INSERT INTO `noce_data` (`id`, `name`, `value`) VALUES (4, '新疆', 22);
+INSERT INTO `noce_data` (`id`, `name`, `value`) VALUES (5, '宁夏', 355);
+INSERT INTO `noce_data` (`id`, `name`, `value`) VALUES (6, '青海', 223);
+INSERT INTO `noce_data` (`id`, `name`, `value`) VALUES (7, '甘肃', 277);
+INSERT INTO `noce_data` (`id`, `name`, `value`) VALUES (8, '陕西', 67);
+INSERT INTO `noce_data` (`id`, `name`, `value`) VALUES (9, '西藏', 56);
+INSERT INTO `noce_data` (`id`, `name`, `value`) VALUES (10, '云南', 44);
+INSERT INTO `noce_data` (`id`, `name`, `value`) VALUES (11, '四川', 123);
+INSERT INTO `noce_data` (`id`, `name`, `value`) VALUES (12, '贵州', 1000);
+INSERT INTO `noce_data` (`id`, `name`, `value`) VALUES (13, '江苏', 1000);

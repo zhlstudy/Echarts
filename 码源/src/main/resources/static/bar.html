@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <!-- 引入刚刚下载的 ECharts 文件 -->
+    <script src="/echarts/echarts.min.js"></script>
+    <script src="/echarts/china.js"></script>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+</head>
+<body>
+<form action="http://localhost:8088">
+    <input type="submit" value="查看中国地图">
+</form>
+
+<!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+<div id="main" style="width: 900px;height:600px;"></div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    var ff = document.getElementById('main')
+    ff.style.backgroundColor = 'skyblue'
+    // 指定图表的配置项和数据
+    var dataList = [];
+
+    option = {
+
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            },
+            backgroundColor: 'rgba(9, 24, 48, 0.5)',
+            borderColor: 'rgba(75, 253, 238, 0.4)',
+            textStyle: {
+                color: '#CFE3FC',
+            },
+            borderWidth: 1,
+        },
+        grid: {
+            top: '15%',
+            right: '5%',
+            left: "5%",
+            bottom: '12%'
+        },
+
+        yAxis: [{
+            name: "人数/个",
+            axisLabel: {
+                formatter: '{value}',
+                color: '#e2e9ff',
+            },
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#FFFFFF'
+                }
+            },
+            splitLine: {
+                lineStyle: {
+                    color: 'rgba(255,255,255,0.12)'
+                }
+            }
+        }],
+
+    };
+
+
+    $.ajax({
+        url: "/queryBar",
+        datatype: "json",
+        success: function (data) {
+            //data：map <cityList[],numberList[]>
+            // for (var i in data){
+            //     dataList[i]=data[i]
+            // }
+            myChart.setOption({
+                xAxis: [{
+                    name: "地区/省",
+                    type: 'category',
+                    data: data.cityList,
+                    axisLine: {
+                        lineStyle: {
+                            color: '#FFFFFF'
+                        }
+                    },
+                    axisLabel: {
+                        margin: 10,
+                        color: '#e2e9ff',
+                        textStyle: {
+                            fontSize: 12
+                        },
+                    },
+                    axisTick: {
+                        show: false
+                    }
+                }],
+                series: [{
+                    type: 'bar',
+                    data: data.numberList,
+                    barWidth: '30%',
+                    itemStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgba(0,244,255,1)' // 0% 处的颜色
+                            }, {
+                                offset: 1,
+                                color: 'rgba(0,77,167,1)' // 100% 处的颜色
+                            }], false),
+                            shadowColor: 'rgba(0,160,221,1)',
+                            shadowBlur: 4,
+                        }
+                    },
+                    label: {
+                        normal: {
+                            show: true,
+                            lineHeight: 10,
+                            formatter: '{c}',
+                            position: 'top',
+                            textStyle: {
+                                color: '#00D6F9',
+                                fontSize: 12
+                            }
+
+                        }
+                    }
+                }]
+
+            })
+        }
+    });
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+
+
+</body>
+</html>
